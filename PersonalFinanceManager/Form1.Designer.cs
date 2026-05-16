@@ -3,12 +3,12 @@
     partial class Form1
     {
         /// <summary>
-        ///  Required designer variable.
+        /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        ///  Clean up any resources being used.
+        /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
@@ -23,125 +23,230 @@
         #region Windows Form Designer generated code
 
         /// <summary>
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            Amount = new Label();
-            txtAmount = new TextBox();
-            cmbCategory = new ComboBox();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            panelTop = new Panel();
+            flowButtons = new FlowLayoutPanel();
             btnSave = new Button();
+            btnDelete = new Button();
+            btnExport = new Button();
+            btnRefresh = new Button();
+            lblBalance = new Label();
+            lblCategory = new Label();
+            cmbCategory = new ComboBox();
+            lblAmount = new Label();
+            txtAmount = new TextBox();
             dgvTransactions = new DataGridView();
+            panelTop.SuspendLayout();
+            flowButtons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvTransactions).BeginInit();
             SuspendLayout();
             // 
-            // Amount
+            // panelTop
             // 
-            Amount.AutoSize = true;
-            Amount.Location = new Point(21, 31);
-            Amount.Name = "Amount";
-            Amount.Size = new Size(51, 15);
-            Amount.TabIndex = 0;
-            Amount.Text = "Amount";
+            panelTop.BackColor = Color.WhiteSmoke;
+            panelTop.Controls.Add(flowButtons);
+            panelTop.Controls.Add(lblBalance);
+            panelTop.Controls.Add(lblCategory);
+            panelTop.Controls.Add(cmbCategory);
+            panelTop.Controls.Add(lblAmount);
+            panelTop.Controls.Add(txtAmount);
+            panelTop.Dock = DockStyle.Top;
+            panelTop.Location = new Point(0, 0);
+            panelTop.Name = "panelTop";
+            panelTop.Padding = new Padding(12);
+            panelTop.Size = new Size(1100, 120);
+            panelTop.TabIndex = 0;
             // 
-            // txtAmount
+            // flowButtons
             // 
-            txtAmount.Location = new Point(93, 28);
-            txtAmount.Name = "txtAmount";
-            txtAmount.Size = new Size(211, 23);
-            txtAmount.TabIndex = 1;
-            // 
-            // cmbCategory
-            // 
-            cmbCategory.FormattingEnabled = true;
-            cmbCategory.Items.AddRange(new object[] { "All", "Food", "Transport", "Bills", "Salary", "Entertainment" });
-            cmbCategory.Location = new Point(25, 97);
-            cmbCategory.Name = "cmbCategory";
-            cmbCategory.Size = new Size(279, 23);
-            cmbCategory.TabIndex = 2;
-            cmbCategory.SelectedIndexChanged += cmbCategory_SelectedIndexChanged;
+            flowButtons.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            flowButtons.Controls.Add(btnSave);
+            flowButtons.Controls.Add(btnDelete);
+            flowButtons.Controls.Add(btnExport);
+            flowButtons.Controls.Add(btnRefresh);
+            flowButtons.Location = new Point(798, 45);
+            flowButtons.Name = "flowButtons";
+            flowButtons.Size = new Size(287, 48);
+            flowButtons.TabIndex = 9;
+            flowButtons.WrapContents = false;
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(120, 147);
+            btnSave.BackColor = Color.FromArgb(33, 150, 243);
+            btnSave.FlatAppearance.BorderSize = 0;
+            btnSave.FlatStyle = FlatStyle.Flat;
+            btnSave.ForeColor = Color.White;
+            btnSave.Location = new Point(6, 3);
+            btnSave.Margin = new Padding(6, 3, 6, 3);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(75, 23);
-            btnSave.TabIndex = 3;
+            btnSave.Size = new Size(60, 40);
+            btnSave.TabIndex = 1;
             btnSave.Text = "Save";
-            btnSave.UseVisualStyleBackColor = true;
+            btnSave.UseVisualStyleBackColor = false;
             btnSave.Click += btnSave_Click;
             // 
             // btnDelete
             // 
-            btnDelete = new Button();
-            btnDelete.Location = new Point(210, 147);
+            btnDelete.BackColor = Color.FromArgb(244, 67, 54);
+            btnDelete.FlatAppearance.BorderSize = 0;
+            btnDelete.FlatStyle = FlatStyle.Flat;
+            btnDelete.ForeColor = Color.White;
+            btnDelete.Location = new Point(78, 3);
+            btnDelete.Margin = new Padding(6, 3, 6, 3);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(75, 23);
-            btnDelete.TabIndex = 5;
+            btnDelete.Size = new Size(60, 40);
+            btnDelete.TabIndex = 2;
             btnDelete.Text = "Delete";
-            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += btnDelete_Click;
             // 
             // btnExport
             // 
-            btnExport = new Button();
-            btnExport.Location = new Point(30, 147);
+            btnExport.BackColor = Color.FromArgb(76, 175, 80);
+            btnExport.FlatAppearance.BorderSize = 0;
+            btnExport.FlatStyle = FlatStyle.Flat;
+            btnExport.ForeColor = Color.White;
+            btnExport.Location = new Point(150, 3);
+            btnExport.Margin = new Padding(6, 3, 6, 3);
             btnExport.Name = "btnExport";
-            btnExport.Size = new Size(75, 23);
-            btnExport.TabIndex = 4;
+            btnExport.Size = new Size(60, 40);
+            btnExport.TabIndex = 3;
             btnExport.Text = "Export";
-            btnExport.UseVisualStyleBackColor = true;
+            btnExport.UseVisualStyleBackColor = false;
             btnExport.Click += btnExport_Click;
+            // 
+            // btnRefresh
+            // 
+            btnRefresh.BackColor = Color.FromArgb(96, 125, 139);
+            btnRefresh.FlatAppearance.BorderSize = 0;
+            btnRefresh.FlatStyle = FlatStyle.Flat;
+            btnRefresh.ForeColor = Color.White;
+            btnRefresh.Location = new Point(222, 3);
+            btnRefresh.Margin = new Padding(6, 3, 6, 3);
+            btnRefresh.Name = "btnRefresh";
+            btnRefresh.Size = new Size(60, 40);
+            btnRefresh.TabIndex = 4;
+            btnRefresh.Text = "Refresh";
+            btnRefresh.UseVisualStyleBackColor = false;
+            btnRefresh.Click += btnRefresh_Click;
             // 
             // lblBalance
             // 
-            lblBalance = new Label();
+            lblBalance.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblBalance.AutoSize = true;
-            lblBalance.Location = new Point(21, 60);
+            lblBalance.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblBalance.Location = new Point(798, 19);
             lblBalance.Name = "lblBalance";
-            lblBalance.Size = new Size(80, 15);
-            lblBalance.TabIndex = 6;
+            lblBalance.Size = new Size(111, 20);
+            lblBalance.TabIndex = 10;
             lblBalance.Text = "Balance: $0.00";
-
+            // 
+            // lblCategory
+            // 
+            lblCategory.AutoSize = true;
+            lblCategory.Location = new Point(18, 58);
+            lblCategory.Name = "lblCategory";
+            lblCategory.Size = new Size(58, 15);
+            lblCategory.TabIndex = 6;
+            lblCategory.Text = "Category:";
+            // 
+            // cmbCategory
+            // 
+            cmbCategory.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbCategory.FormattingEnabled = true;
+            cmbCategory.Location = new Point(100, 55);
+            cmbCategory.Name = "cmbCategory";
+            cmbCategory.Size = new Size(250, 23);
+            cmbCategory.TabIndex = 5;
+            cmbCategory.SelectedIndexChanged += cmbCategory_SelectedIndexChanged;
+            // 
+            // lblAmount
+            // 
+            lblAmount.AutoSize = true;
+            lblAmount.Location = new Point(18, 22);
+            lblAmount.Name = "lblAmount";
+            lblAmount.Size = new Size(54, 15);
+            lblAmount.TabIndex = 7;
+            lblAmount.Text = "Amount:";
+            // 
+            // txtAmount
+            // 
+            txtAmount.Location = new Point(100, 19);
+            txtAmount.Name = "txtAmount";
+            txtAmount.Size = new Size(160, 23);
+            txtAmount.TabIndex = 0;
             // 
             // dgvTransactions
             // 
+            dgvTransactions.AllowUserToAddRows = false;
+            dgvTransactions.AllowUserToDeleteRows = false;
+            dgvTransactions.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvTransactions.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvTransactions.BackgroundColor = Color.White;
+            dgvTransactions.BorderStyle = BorderStyle.None;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = SystemColors.Control;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dgvTransactions.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dgvTransactions.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvTransactions.Location = new Point(21, 207);
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Window;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dgvTransactions.DefaultCellStyle = dataGridViewCellStyle4;
+            dgvTransactions.Location = new Point(12, 132);
             dgvTransactions.Name = "dgvTransactions";
-            dgvTransactions.Size = new Size(291, 231);
-            dgvTransactions.TabIndex = 4;
+            dgvTransactions.ReadOnly = true;
+            dgvTransactions.RowTemplate.Height = 28;
+            dgvTransactions.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvTransactions.Size = new Size(1076, 506);
+            dgvTransactions.TabIndex = 8;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(364, 450);
+            ClientSize = new Size(1100, 650);
             Controls.Add(dgvTransactions);
-            Controls.Add(btnDelete);
-            Controls.Add(btnSave);
-            Controls.Add(btnExport);
-            Controls.Add(lblBalance);
-            Controls.Add(cmbCategory);
-            Controls.Add(txtAmount);
-            Controls.Add(Amount);
+            Controls.Add(panelTop);
+            Font = new Font("Segoe UI", 9F);
+            MinimumSize = new Size(1000, 600);
             Name = "Form1";
-            Text = "Form1";
+            Text = "Personal Finance Manager";
+            panelTop.ResumeLayout(false);
+            panelTop.PerformLayout();
+            flowButtons.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvTransactions).EndInit();
             ResumeLayout(false);
-            PerformLayout();
+
         }
 
         #endregion
 
-        private Label Amount;
-        private TextBox txtAmount;
-        private ComboBox cmbCategory;
-        private Button btnSave;
-        private Button btnDelete;
-        private Label lblBalance;
-        private Button btnExport;
-        private DataGridView dgvTransactions;
+        private System.Windows.Forms.Panel panelTop;
+        private System.Windows.Forms.Label lblBalance;
+        private System.Windows.Forms.FlowLayoutPanel flowButtons;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.Label lblCategory;
+        private System.Windows.Forms.ComboBox cmbCategory;
+        private System.Windows.Forms.Label lblAmount;
+        private System.Windows.Forms.TextBox txtAmount;
+        private System.Windows.Forms.DataGridView dgvTransactions;
     }
 }
