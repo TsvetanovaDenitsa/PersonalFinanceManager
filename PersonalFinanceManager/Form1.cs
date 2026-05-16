@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PersonalFinanceManager.DAL;
 using PersonalFinanceManager.Models;
+using PersonalFinanceManager;
 
 namespace PersonalFinanceManager
 {
@@ -273,6 +274,54 @@ namespace PersonalFinanceManager
             return input.Contains(',') || input.Contains('"') || input.Contains('\n')
                 ? '"' + input.Replace("\"", "\"\"") + '"'
                 : input;
+        }
+
+        // Menu handlers
+        private void mnuStatistics_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using var frm = new StatisticsForm();
+                frm.ShowDialog(this);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, $"Failed to open Statistics: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void mnuExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void mnuDashboard_Click(object sender, EventArgs e)
+        {
+            // Dashboard is the main form; bring to front or refresh
+            try
+            {
+                this.BringToFront();
+                _ = LoadTransactionsAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, $"Failed to refresh dashboard: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void mnuCategories_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(this, "Categories management not implemented in UI.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void mnuBudgets_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(this, "Budgets management not implemented in UI.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void mnuSettings_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(this, "Settings not implemented.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

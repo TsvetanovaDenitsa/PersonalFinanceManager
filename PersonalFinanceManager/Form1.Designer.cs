@@ -215,13 +215,81 @@
             dgvTransactions.Size = new Size(1076, 506);
             dgvTransactions.TabIndex = 8;
             // 
+            // menuStripMain
+            // 
+            menuStripMain = new System.Windows.Forms.MenuStrip();
+            mnuDashboard = new System.Windows.Forms.ToolStripMenuItem();
+            mnuStatistics = new System.Windows.Forms.ToolStripMenuItem();
+            mnuCategories = new System.Windows.Forms.ToolStripMenuItem();
+            mnuBudgets = new System.Windows.Forms.ToolStripMenuItem();
+            mnuSettings = new System.Windows.Forms.ToolStripMenuItem();
+            mnuExit = new System.Windows.Forms.ToolStripMenuItem();
+            menuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+                mnuDashboard,
+                mnuStatistics,
+                mnuCategories,
+                mnuBudgets,
+                mnuSettings,
+                mnuExit
+            });
+            menuStripMain.Location = new System.Drawing.Point(0, 0);
+            menuStripMain.Name = "menuStripMain";
+            menuStripMain.Size = new System.Drawing.Size(1100, 24);
+            menuStripMain.TabIndex = 99;
+            menuStripMain.Text = "menuStripMain";
+            // 
+            // mnuDashboard
+            // 
+            mnuDashboard.Name = "mnuDashboard";
+            mnuDashboard.Size = new System.Drawing.Size(76, 20);
+            mnuDashboard.Text = "Dashboard";
+            mnuDashboard.Click += new System.EventHandler(this.mnuDashboard_Click);
+            // 
+            // mnuStatistics
+            // 
+            mnuStatistics.Name = "mnuStatistics";
+            mnuStatistics.Size = new System.Drawing.Size(72, 20);
+            mnuStatistics.Text = "Statistics";
+            mnuStatistics.Click += new System.EventHandler(this.mnuStatistics_Click);
+            // 
+            // mnuCategories
+            // 
+            mnuCategories.Name = "mnuCategories";
+            mnuCategories.Size = new System.Drawing.Size(75, 20);
+            mnuCategories.Text = "Categories";
+            mnuCategories.Click += new System.EventHandler(this.mnuCategories_Click);
+            // 
+            // mnuBudgets
+            // 
+            mnuBudgets.Name = "mnuBudgets";
+            mnuBudgets.Size = new System.Drawing.Size(61, 20);
+            mnuBudgets.Text = "Budgets";
+            mnuBudgets.Click += new System.EventHandler(this.mnuBudgets_Click);
+            // 
+            // mnuSettings
+            // 
+            mnuSettings.Name = "mnuSettings";
+            mnuSettings.Size = new System.Drawing.Size(61, 20);
+            mnuSettings.Text = "Settings";
+            mnuSettings.Click += new System.EventHandler(this.mnuSettings_Click);
+            // 
+            // mnuExit
+            // 
+            mnuExit.Name = "mnuExit";
+            mnuExit.Size = new System.Drawing.Size(38, 20);
+            mnuExit.Text = "Exit";
+            mnuExit.Click += new System.EventHandler(this.mnuExit_Click);
+
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1100, 650);
-            Controls.Add(dgvTransactions);
+            // Ensure menu is added first so it docks to top
+            this.MainMenuStrip = menuStripMain;
+            Controls.Add(menuStripMain);
             Controls.Add(panelTop);
+            Controls.Add(dgvTransactions);
             Font = new Font("Segoe UI", 9F);
             MinimumSize = new Size(1000, 600);
             Name = "Form1";
@@ -248,5 +316,12 @@
         private System.Windows.Forms.Label lblAmount;
         private System.Windows.Forms.TextBox txtAmount;
         private System.Windows.Forms.DataGridView dgvTransactions;
+        private System.Windows.Forms.MenuStrip menuStripMain;
+        private System.Windows.Forms.ToolStripMenuItem mnuDashboard;
+        private System.Windows.Forms.ToolStripMenuItem mnuStatistics;
+        private System.Windows.Forms.ToolStripMenuItem mnuCategories;
+        private System.Windows.Forms.ToolStripMenuItem mnuBudgets;
+        private System.Windows.Forms.ToolStripMenuItem mnuSettings;
+        private System.Windows.Forms.ToolStripMenuItem mnuExit;
     }
 }

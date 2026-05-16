@@ -3,5 +3,5 @@
   <Project Path="PersonalFinanceManager.DAL/PersonalFinanceManager.DAL.csproj" Id="697df2a2-e527-4c43-9baa-1ae45f933331" />
   <Project Path="PersonalFinanceManager.Database/PersonalFinanceManager.Database.csproj" Id="77054001-7e62-43e5-a530-b7710b42e60f" />
   <Project Path="PersonalFinanceManager.Models/PersonalFinanceManager.Models.csproj" Id="2b2e32e6-fcb1-4020-bfdc-39e8dffb1289" />
-  <Project Path="PersonalFinanceManager/PersonalFinanceManager.UI.csproj" />
+  <Project Path="PersonalFinanceManager/PersonalFinanceManager.csproj" />
 </Solution>
