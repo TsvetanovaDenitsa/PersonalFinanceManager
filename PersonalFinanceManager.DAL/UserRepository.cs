@@ -1,10 +1,11 @@
-﻿
+using System;
 using Microsoft.Data.SqlClient;
 using PersonalFinanceManager.Models;
+using System.Collections.Generic;
 
 namespace PersonalFinanceManager.DAL;
 
-public class UserRepository
+public sealed class UserRepository
 {
     private readonly DatabaseManager _db;
 
@@ -15,264 +16,69 @@ public class UserRepository
 
     public bool AddUser(User user)
     {
-        if (user == null)
-        {
-            throw new ArgumentNullException(nameof(user));
-        }
+        const string sql = @"INSERT INTO Users (Username, Email, PasswordHash, FirstName, LastName, CreatedAt)
+VALUES (@Username, @Email, @PasswordHash, @FirstName, @LastName, @CreatedAt);";
 
-        const string sql = @"
-INSERT INTO Users
-(
-    Username,
-    Email,
-    PasswordHash,
-    FirstName,
-    LastName
-)
-VALUES
-(
-    @Username,
-    @Email,
-    @PasswordHash,
-    @FirstName,
-    @LastName
-)";
+        using var conn = _db.GetConnection();
+        using var cmd = new SqlCommand(sql, conn);
+        cmd.Parameters.AddWithValue("@Username", user.Username);
+        cmd.Parameters.AddWithValue("@Email", user.Email);
+        cmd.Parameters.AddWithValue("@PasswordHash", user.PasswordHash);
+        cmd.Parameters.AddWithValue("@FirstName", (object?)user.FirstName ?? DBNull.Value);
+        cmd.Parameters.AddWithValue("@LastName", (object?)user.LastName ?? DBNull.Value);
+        cmd.Parameters.AddWithValue("@CreatedAt", (object?)user.CreatedAt ?? DateTime.Now);
 
-        try
-        {
-            using SqlConnection connection =
-                _db.GetConnection();
-
-            using SqlCommand command =
-                new SqlCommand(sql, connection);
-
-            command.Parameters.AddWithValue(
-                "@Username",
-                user.Username);
-
-            command.Parameters.AddWithValue(
-                "@Email",
-                user.Email);
-
-            command.Parameters.AddWithValue(
-                "@PasswordHash",
-                user.PasswordHash);
-
-            command.Parameters.AddWithValue(
-                "@FirstName",
-                string.IsNullOrWhiteSpace(user.FirstName)
-                    ? DBNull.Value
-                    : user.FirstName);
-
-            command.Parameters.AddWithValue(
-                "@LastName",
-                string.IsNullOrWhiteSpace(user.LastName)
-                    ? DBNull.Value
-                    : user.LastName);
-
-            connection.Open();
-
-            int affectedRows =
-                command.ExecuteNonQuery();
-
-            return affectedRows > 0;
-        }
-        catch (SqlException ex)
-        {
-            throw new InvalidOperationException(
-                "Database error while adding user.",
-                ex);
-        }
+        conn.Open();
+        var affected = cmd.ExecuteNonQuery();
+        return affected > 0;
     }
 
-    public bool ValidateLogin(
-        string username,
-        string password)
+    public User? ValidateLogin(string usernameOrEmail, string passwordHash)
     {
-        const string sql = @"
-SELECT COUNT(*)
+        const string sql = @"SELECT Id, Username, Email, PasswordHash, FirstName, LastName, CreatedAt
 FROM Users
-WHERE Username = @Username
-AND PasswordHash = @PasswordHash";
+WHERE (Username = @Input OR Email = @Input) AND PasswordHash = @PasswordHash";
 
-        try
+        using var conn = _db.GetConnection();
+        using var cmd = new SqlCommand(sql, conn);
+        cmd.Parameters.AddWithValue("@Input", usernameOrEmail);
+        cmd.Parameters.AddWithValue("@PasswordHash", passwordHash);
+
+        conn.Open();
+        using var reader = cmd.ExecuteReader();
+        if (!reader.Read()) return null;
+
+        return new User
         {
-            using SqlConnection connection =
-                _db.GetConnection();
-
-            using SqlCommand command =
-                new SqlCommand(sql, connection);
-
-            command.Parameters.AddWithValue(
-                "@Username",
-                username);
-
-            command.Parameters.AddWithValue(
-                "@PasswordHash",
-                password);
-
-            connection.Open();
-
-            int count =
-                Convert.ToInt32(
-                    command.ExecuteScalar());
-
-            return count > 0;
-        }
-        catch (SqlException ex)
-        {
-            throw new InvalidOperationException(
-                "Database error while validating login.",
-                ex);
-        }
+            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+            Username = reader.GetString(reader.GetOrdinal("Username")),
+            Email = reader.GetString(reader.GetOrdinal("Email")),
+            PasswordHash = reader.GetString(reader.GetOrdinal("PasswordHash")),
+            FirstName = reader.IsDBNull(reader.GetOrdinal("FirstName")) ? null : reader.GetString(reader.GetOrdinal("FirstName")),
+            LastName = reader.IsDBNull(reader.GetOrdinal("LastName")) ? null : reader.GetString(reader.GetOrdinal("LastName")),
+            CreatedAt = reader.IsDBNull(reader.GetOrdinal("CreatedAt")) ? null : reader.GetDateTime(reader.GetOrdinal("CreatedAt"))
+        };
     }
 
     public bool UserExistsByUsername(string username)
     {
-        const string sql = @"
-SELECT COUNT(*)
-FROM Users
-WHERE Username = @Username";
-
-        try
-        {
-            using SqlConnection connection =
-                _db.GetConnection();
-
-            using SqlCommand command =
-                new SqlCommand(sql, connection);
-
-            command.Parameters.AddWithValue(
-                "@Username",
-                username);
-
-            connection.Open();
-
-            int count =
-                Convert.ToInt32(
-                    command.ExecuteScalar());
-
-            return count > 0;
-        }
-        catch (SqlException ex)
-        {
-            throw new InvalidOperationException(
-                "Database error while checking username.",
-                ex);
-        }
+        const string sql = "SELECT COUNT(1) FROM Users WHERE Username = @Username";
+        using var conn = _db.GetConnection();
+        using var cmd = new SqlCommand(sql, conn);
+        cmd.Parameters.AddWithValue("@Username", username);
+        conn.Open();
+        var result = cmd.ExecuteScalar();
+        return Convert.ToInt32(result) > 0;
     }
 
     public bool UserExistsByEmail(string email)
     {
-        const string sql = @"
-SELECT COUNT(*)
-FROM Users
-WHERE Email = @Email";
-
-        try
-        {
-            using SqlConnection connection =
-                _db.GetConnection();
-
-            using SqlCommand command =
-                new SqlCommand(sql, connection);
-
-            command.Parameters.AddWithValue(
-                "@Email",
-                email);
-
-            connection.Open();
-
-            int count =
-                Convert.ToInt32(
-                    command.ExecuteScalar());
-
-            return count > 0;
-        }
-        catch (SqlException ex)
-        {
-            throw new InvalidOperationException(
-                "Database error while checking email.",
-                ex);
-        }
+        const string sql = "SELECT COUNT(1) FROM Users WHERE Email = @Email";
+        using var conn = _db.GetConnection();
+        using var cmd = new SqlCommand(sql, conn);
+        cmd.Parameters.AddWithValue("@Email", email);
+        conn.Open();
+        var result = cmd.ExecuteScalar();
+        return Convert.ToInt32(result) > 0;
     }
-
-    public User? GetUserByUsername(string username)
-    {
-        const string sql = @"
-SELECT
-    Id,
-    Username,
-    Email,
-    PasswordHash,
-    FirstName,
-    LastName
-FROM Users
-WHERE Username = @Username";
-
-        try
-        {
-            using SqlConnection connection =
-                _db.GetConnection();
-
-            using SqlCommand command =
-                new SqlCommand(sql, connection);
-
-            command.Parameters.AddWithValue(
-                "@Username",
-                username);
-
-            connection.Open();
-
-            using SqlDataReader reader =
-                command.ExecuteReader();
-
-            if (!reader.Read())
-            {
-                return null;
-            }
-
-            return MapReaderToUser(reader);
-        }
-        catch (SqlException ex)
-        {
-            throw new InvalidOperationException(
-                "Database error while retrieving user.",
-                ex);
-        }
-    }
-
-    private static User MapReaderToUser(
-        SqlDataReader reader)
-    {
-        return new User
-        {
-            Id = reader.GetInt32(
-                reader.GetOrdinal("Id")),
-
-            Username = reader.GetString(
-                reader.GetOrdinal("Username")),
-
-            Email = reader.GetString(
-                reader.GetOrdinal("Email")),
-
-            PasswordHash = reader.GetString(
-                reader.GetOrdinal("PasswordHash")),
-
-            FirstName = reader.IsDBNull(
-                reader.GetOrdinal("FirstName"))
-                    ? string.Empty
-                    : reader.GetString(
-                        reader.GetOrdinal("FirstName")),
-
-            LastName = reader.IsDBNull(
-                reader.GetOrdinal("LastName"))
-                    ? string.Empty
-                    : reader.GetString(
-                        reader.GetOrdinal("LastName"))
-        };
-    }
-
-
-
 }

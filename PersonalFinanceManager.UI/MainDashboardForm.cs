@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using PersonalFinanceManager.DAL;
 using PersonalFinanceManager.Models;
+using PersonalFinanceManager;
 
 namespace PersonalFinanceManager
 {
@@ -58,6 +59,7 @@ namespace PersonalFinanceManager
                 cmbCategory.ValueMember = "Id";
                 cmbCategory.Items.Clear();
 
+                // Add an "All" pseudo-category
                 cmbCategory.Items.Add(new Category { Id = 0, Name = "All Categories" });
 
                 foreach (var c in _categories) cmbCategory.Items.Add(c);
@@ -74,6 +76,7 @@ namespace PersonalFinanceManager
         {
             try
             {
+                // Load based on selected category
                 if (cmbCategory.SelectedItem is Category selected && selected.Id > 0)
                 {
                     _transactions = _txRepo.GetTransactionsByCategory(selected.Id);
@@ -83,6 +86,7 @@ namespace PersonalFinanceManager
                     _transactions = _txRepo.GetAllTransactions();
                 }
 
+                // Keep only current user's transactions in view
                 var userTx = _transactions.Where(t => t.UserId == CurrentUser.Id).ToList();
 
                 var table = new DataTable();
@@ -100,7 +104,7 @@ namespace PersonalFinanceManager
 
                 dgvTransactions.DataSource = table;
                 if (dgvTransactions.Columns.Count > 0)
-                    dgvTransactions.Columns[0].Visible = false;
+                    dgvTransactions.Columns[0].Visible = false; // hide Id
             }
             catch (Exception ex)
             {
@@ -124,8 +128,8 @@ namespace PersonalFinanceManager
         private int GetSelectedTransactionId()
         {
             if (dgvTransactions.CurrentRow == null) return 0;
-            var v = dgvTransactions.CurrentRow.Cells[0].Value;
-            return v is int id ? id : 0;
+            var value = dgvTransactions.CurrentRow.Cells[0].Value;
+            return value is int id ? id : 0;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -239,11 +243,8 @@ namespace PersonalFinanceManager
             }
         }
 
-        private void btnRefresh_Click(object sender, EventArgs e)
-        {
-            LoadTransactions();
-            CalculateBalance();
-        }
+        private void btnRefresh_Click(object sender, EventArgs e) =>
+            (LoadTransactions(), CalculateBalance());
 
         private void cmbCategory_SelectedIndexChanged(object sender, EventArgs e) => LoadTransactions();
 
@@ -251,7 +252,7 @@ namespace PersonalFinanceManager
         {
             try
             {
-                var stats = new StatisticsForm();
+                var stats = new PersonalFinanceManager.StatisticsForm();
                 stats.ShowDialog(this);
             }
             catch (Exception ex)

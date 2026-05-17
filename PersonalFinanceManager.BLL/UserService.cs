@@ -45,22 +45,13 @@ public class UserService
 
 
     public bool LoginUser(
- string username,
- string password)
+    string username,
+    string password)
     {
-        bool isValid =
+        User? user =
             _userRepository.ValidateLogin(
                 username,
                 password);
-
-        if (!isValid)
-        {
-            return false;
-        }
-
-        User? user =
-            _userRepository
-                .GetUserByUsername(username);
 
         if (user == null)
         {
@@ -76,6 +67,15 @@ public class UserService
             user.Email;
 
         return true;
+    }
+
+    private static string HashPassword(string password)
+    {
+        if (password == null) return string.Empty;
+        using var sha = System.Security.Cryptography.SHA256.Create();
+        var bytes = System.Text.Encoding.UTF8.GetBytes(password);
+        var hashed = sha.ComputeHash(bytes);
+        return Convert.ToHexString(hashed);
     }
 
 
