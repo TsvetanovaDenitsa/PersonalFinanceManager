@@ -43,20 +43,41 @@ public class UserService
         return _userRepository.AddUser(user);
     }
 
-    public bool LoginUser(string username, string password)
+
+    public bool LoginUser(
+ string username,
+ string password)
     {
-        if (string.IsNullOrWhiteSpace(username))
+        bool isValid =
+            _userRepository.ValidateLogin(
+                username,
+                password);
+
+        if (!isValid)
         {
-            throw new Exception("Username is required.");
+            return false;
         }
 
-        if (string.IsNullOrWhiteSpace(password))
+        User? user =
+            _userRepository
+                .GetUserByUsername(username);
+
+        if (user == null)
         {
-            throw new Exception("Password is required.");
+            return false;
         }
 
-        return _userRepository.ValidateLogin(username, password);
+        CurrentUser.Id = user.Id;
+
+        CurrentUser.Username =
+            user.Username;
+
+        CurrentUser.Email =
+            user.Email;
+
+        return true;
     }
+
 
     private void ValidateUser(User user)
     {
