@@ -1,5 +1,5 @@
 ﻿using PersonalFinanceManager.BLL;
-using PersonalFinanceManager.UI;
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

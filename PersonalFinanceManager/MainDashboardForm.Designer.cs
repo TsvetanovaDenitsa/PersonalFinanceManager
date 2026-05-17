@@ -1,4 +1,4 @@
-namespace PersonalFinanceManager.UI
+﻿namespace PersonalFinanceManager
 {
     partial class MainDashboardForm
     {
@@ -22,233 +22,302 @@ namespace PersonalFinanceManager.UI
 
         #region Windows Form Designer generated code
 
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.pnlTop = new System.Windows.Forms.Panel();
-            this.pnlBalance = new System.Windows.Forms.Panel();
-            this.lblCurrentBalanceTitle = new System.Windows.Forms.Label();
-            this.lblCurrentBalance = new System.Windows.Forms.Label();
-            this.pnlExpenses = new System.Windows.Forms.Panel();
-            this.lblMonthlyExpensesTitle = new System.Windows.Forms.Label();
-            this.lblMonthlyExpenses = new System.Windows.Forms.Label();
-            this.pnlIncome = new System.Windows.Forms.Panel();
-            this.lblMonthlyIncomeTitle = new System.Windows.Forms.Label();
-            this.lblMonthlyIncome = new System.Windows.Forms.Label();
-            this.pnlQuickStats = new System.Windows.Forms.Panel();
-            this.chartQuickStatistics = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.dgvRecentTransactions = new System.Windows.Forms.DataGridView();
-            this.flowButtons = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnRefresh = new System.Windows.Forms.Button();
-            this.btnOpenStatistics = new System.Windows.Forms.Button();
-            this.btnAddTransaction = new System.Windows.Forms.Button();
-            this.pnlTop.SuspendLayout();
-            this.pnlBalance.SuspendLayout();
-            this.pnlExpenses.SuspendLayout();
-            this.pnlIncome.SuspendLayout();
-            this.pnlQuickStats.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartQuickStatistics)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvRecentTransactions)).BeginInit();
-            this.flowButtons.SuspendLayout();
-            this.SuspendLayout();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            panelTop = new Panel();
+            flowButtons = new FlowLayoutPanel();
+            btnSave = new Button();
+            btnDelete = new Button();
+            btnExport = new Button();
+            btnRefresh = new Button();
+            lblBalance = new Label();
+            lblCategory = new Label();
+            cmbCategory = new ComboBox();
+            lblAmount = new Label();
+            txtAmount = new TextBox();
+            dgvTransactions = new DataGridView();
+            menuStripMain = new MenuStrip();
+            mnuDashboard = new ToolStripMenuItem();
+            mnuStatistics = new ToolStripMenuItem();
+            mnuCategories = new ToolStripMenuItem();
+            mnuBudgets = new ToolStripMenuItem();
+            mnuSettings = new ToolStripMenuItem();
+            mnuExit = new ToolStripMenuItem();
+            panelTop.SuspendLayout();
+            flowButtons.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvTransactions).BeginInit();
+            menuStripMain.SuspendLayout();
+            SuspendLayout();
             // 
-            // pnlTop
+            // panelTop
             // 
-            this.pnlTop.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlTop.Height = 120;
-            this.pnlTop.Padding = new System.Windows.Forms.Padding(12);
-            this.pnlTop.Controls.Add(this.pnlBalance);
-            this.pnlTop.Controls.Add(this.pnlExpenses);
-            this.pnlTop.Controls.Add(this.pnlIncome);
-            this.pnlTop.Controls.Add(this.flowButtons);
-            // 
-            // pnlBalance
-            // 
-            this.pnlBalance.BackColor = System.Drawing.Color.White;
-            this.pnlBalance.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlBalance.Location = new System.Drawing.Point(12, 12);
-            this.pnlBalance.Size = new System.Drawing.Size(300, 96);
-            this.pnlBalance.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.pnlBalance.Controls.Add(this.lblCurrentBalanceTitle);
-            this.pnlBalance.Controls.Add(this.lblCurrentBalance);
-            // 
-            // lblCurrentBalanceTitle
-            // 
-            this.lblCurrentBalanceTitle.AutoSize = true;
-            this.lblCurrentBalanceTitle.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblCurrentBalanceTitle.Location = new System.Drawing.Point(12, 12);
-            this.lblCurrentBalanceTitle.Text = "Current Balance";
-            // 
-            // lblCurrentBalance
-            // 
-            this.lblCurrentBalance.AutoSize = true;
-            this.lblCurrentBalance.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.lblCurrentBalance.Location = new System.Drawing.Point(12, 34);
-            this.lblCurrentBalance.Name = "lblCurrentBalance";
-            this.lblCurrentBalance.Size = new System.Drawing.Size(180, 37);
-            this.lblCurrentBalance.Text = "$0.00";
-            // 
-            // pnlExpenses
-            // 
-            this.pnlExpenses.BackColor = System.Drawing.Color.White;
-            this.pnlExpenses.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlExpenses.Location = new System.Drawing.Point(330, 12);
-            this.pnlExpenses.Size = new System.Drawing.Size(300, 96);
-            this.pnlExpenses.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pnlExpenses.Controls.Add(this.lblMonthlyExpensesTitle);
-            this.pnlExpenses.Controls.Add(this.lblMonthlyExpenses);
-            // 
-            // lblMonthlyExpensesTitle
-            // 
-            this.lblMonthlyExpensesTitle.AutoSize = true;
-            this.lblMonthlyExpensesTitle.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblMonthlyExpensesTitle.Location = new System.Drawing.Point(12, 12);
-            this.lblMonthlyExpensesTitle.Text = "Monthly Expenses";
-            // 
-            // lblMonthlyExpenses
-            // 
-            this.lblMonthlyExpenses.AutoSize = true;
-            this.lblMonthlyExpenses.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            this.lblMonthlyExpenses.Location = new System.Drawing.Point(12, 34);
-            this.lblMonthlyExpenses.Name = "lblMonthlyExpenses";
-            this.lblMonthlyExpenses.Size = new System.Drawing.Size(120, 30);
-            this.lblMonthlyExpenses.Text = "$0.00";
-            // 
-            // pnlIncome
-            // 
-            this.pnlIncome.BackColor = System.Drawing.Color.White;
-            this.pnlIncome.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlIncome.Location = new System.Drawing.Point(648, 12);
-            this.pnlIncome.Size = new System.Drawing.Size(300, 96);
-            this.pnlIncome.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.pnlIncome.Controls.Add(this.lblMonthlyIncomeTitle);
-            this.pnlIncome.Controls.Add(this.lblMonthlyIncome);
-            // 
-            // lblMonthlyIncomeTitle
-            // 
-            this.lblMonthlyIncomeTitle.AutoSize = true;
-            this.lblMonthlyIncomeTitle.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblMonthlyIncomeTitle.Location = new System.Drawing.Point(12, 12);
-            this.lblMonthlyIncomeTitle.Text = "Monthly Income";
-            // 
-            // lblMonthlyIncome
-            // 
-            this.lblMonthlyIncome.AutoSize = true;
-            this.lblMonthlyIncome.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            this.lblMonthlyIncome.Location = new System.Drawing.Point(12, 34);
-            this.lblMonthlyIncome.Name = "lblMonthlyIncome";
-            this.lblMonthlyIncome.Size = new System.Drawing.Size(120, 30);
-            this.lblMonthlyIncome.Text = "$0.00";
+            panelTop.BackColor = Color.WhiteSmoke;
+            panelTop.Controls.Add(flowButtons);
+            panelTop.Controls.Add(lblBalance);
+            panelTop.Controls.Add(lblCategory);
+            panelTop.Controls.Add(cmbCategory);
+            panelTop.Controls.Add(lblAmount);
+            panelTop.Controls.Add(txtAmount);
+            panelTop.Dock = DockStyle.Top;
+            panelTop.Location = new Point(0, 0);
+            panelTop.Name = "panelTop";
+            panelTop.Padding = new Padding(12);
+            panelTop.Size = new Size(1100, 106);
+            panelTop.TabIndex = 0;
             // 
             // flowButtons
             // 
-            this.flowButtons.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.flowButtons.Location = new System.Drawing.Point(964, 12);
-            this.flowButtons.Size = new System.Drawing.Size(220, 96);
-            this.flowButtons.Controls.Add(this.btnRefresh);
-            this.flowButtons.Controls.Add(this.btnOpenStatistics);
-            this.flowButtons.Controls.Add(this.btnAddTransaction);
+            flowButtons.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            flowButtons.Controls.Add(btnSave);
+            flowButtons.Controls.Add(btnDelete);
+            flowButtons.Controls.Add(btnExport);
+            flowButtons.Controls.Add(btnRefresh);
+            flowButtons.Location = new Point(798, 45);
+            flowButtons.Name = "flowButtons";
+            flowButtons.Size = new Size(287, 48);
+            flowButtons.TabIndex = 9;
+            flowButtons.WrapContents = false;
+            // 
+            // btnSave
+            // 
+            btnSave.BackColor = Color.FromArgb(33, 150, 243);
+            btnSave.FlatAppearance.BorderSize = 0;
+            btnSave.FlatStyle = FlatStyle.Flat;
+            btnSave.ForeColor = Color.White;
+            btnSave.Location = new Point(6, 3);
+            btnSave.Margin = new Padding(6, 3, 6, 3);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(60, 40);
+            btnSave.TabIndex = 1;
+            btnSave.Text = "Save";
+            btnSave.UseVisualStyleBackColor = false;
+            btnSave.Click += btnSave_Click;
+            // 
+            // btnDelete
+            // 
+            btnDelete.BackColor = Color.FromArgb(244, 67, 54);
+            btnDelete.FlatAppearance.BorderSize = 0;
+            btnDelete.FlatStyle = FlatStyle.Flat;
+            btnDelete.ForeColor = Color.White;
+            btnDelete.Location = new Point(78, 3);
+            btnDelete.Margin = new Padding(6, 3, 6, 3);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(60, 40);
+            btnDelete.TabIndex = 2;
+            btnDelete.Text = "Delete";
+            btnDelete.UseVisualStyleBackColor = false;
+            btnDelete.Click += btnDelete_Click;
+            // 
+            // btnExport
+            // 
+            btnExport.BackColor = Color.FromArgb(76, 175, 80);
+            btnExport.FlatAppearance.BorderSize = 0;
+            btnExport.FlatStyle = FlatStyle.Flat;
+            btnExport.ForeColor = Color.White;
+            btnExport.Location = new Point(150, 3);
+            btnExport.Margin = new Padding(6, 3, 6, 3);
+            btnExport.Name = "btnExport";
+            btnExport.Size = new Size(60, 40);
+            btnExport.TabIndex = 3;
+            btnExport.Text = "Export";
+            btnExport.UseVisualStyleBackColor = false;
+            btnExport.Click += btnExport_Click;
             // 
             // btnRefresh
             // 
-            this.btnRefresh.BackColor = System.Drawing.Color.FromArgb(96, 125, 139);
-            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRefresh.ForeColor = System.Drawing.Color.White;
-            this.btnRefresh.Size = new System.Drawing.Size(100, 36);
-            this.btnRefresh.Text = "Refresh";
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            btnRefresh.BackColor = Color.FromArgb(96, 125, 139);
+            btnRefresh.FlatAppearance.BorderSize = 0;
+            btnRefresh.FlatStyle = FlatStyle.Flat;
+            btnRefresh.ForeColor = Color.White;
+            btnRefresh.Location = new Point(222, 3);
+            btnRefresh.Margin = new Padding(6, 3, 6, 3);
+            btnRefresh.Name = "btnRefresh";
+            btnRefresh.Size = new Size(60, 40);
+            btnRefresh.TabIndex = 4;
+            btnRefresh.Text = "Refresh";
+            btnRefresh.UseVisualStyleBackColor = false;
+            btnRefresh.Click += btnRefresh_Click;
             // 
-            // btnOpenStatistics
+            // lblBalance
             // 
-            this.btnOpenStatistics.BackColor = System.Drawing.Color.FromArgb(33, 150, 243);
-            this.btnOpenStatistics.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOpenStatistics.ForeColor = System.Drawing.Color.White;
-            this.btnOpenStatistics.Size = new System.Drawing.Size(100, 36);
-            this.btnOpenStatistics.Text = "Statistics";
-            this.btnOpenStatistics.Click += new System.EventHandler(this.btnOpenStatistics_Click);
+            lblBalance.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblBalance.AutoSize = true;
+            lblBalance.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblBalance.Location = new Point(798, 19);
+            lblBalance.Name = "lblBalance";
+            lblBalance.Size = new Size(111, 20);
+            lblBalance.TabIndex = 10;
+            lblBalance.Text = "Balance: $0.00";
             // 
-            // btnAddTransaction
+            // lblCategory
             // 
-            this.btnAddTransaction.BackColor = System.Drawing.Color.FromArgb(76, 175, 80);
-            this.btnAddTransaction.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddTransaction.ForeColor = System.Drawing.Color.White;
-            this.btnAddTransaction.Size = new System.Drawing.Size(100, 36);
-            this.btnAddTransaction.Text = "Add";
-            this.btnAddTransaction.Click += new System.EventHandler(this.btnAddTransaction_Click);
+            lblCategory.AutoSize = true;
+            lblCategory.Location = new Point(18, 58);
+            lblCategory.Name = "lblCategory";
+            lblCategory.Size = new Size(58, 15);
+            lblCategory.TabIndex = 6;
+            lblCategory.Text = "Category:";
             // 
-            // pnlQuickStats
+            // cmbCategory
             // 
-            this.pnlQuickStats.BackColor = System.Drawing.Color.White;
-            this.pnlQuickStats.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlQuickStats.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnlQuickStats.Width = 380;
-            this.pnlQuickStats.Padding = new System.Windows.Forms.Padding(8);
-            this.pnlQuickStats.Controls.Add(this.chartQuickStatistics);
+            cmbCategory.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbCategory.FormattingEnabled = true;
+            cmbCategory.Location = new Point(100, 55);
+            cmbCategory.Name = "cmbCategory";
+            cmbCategory.Size = new Size(250, 23);
+            cmbCategory.TabIndex = 5;
+            cmbCategory.SelectedIndexChanged += cmbCategory_SelectedIndexChanged;
             // 
-            // chartQuickStatistics
+            // lblAmount
             // 
-            this.chartQuickStatistics.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chartQuickStatistics.Name = "chartQuickStatistics";
-            this.chartQuickStatistics.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
+            lblAmount.AutoSize = true;
+            lblAmount.Location = new Point(18, 22);
+            lblAmount.Name = "lblAmount";
+            lblAmount.Size = new Size(54, 15);
+            lblAmount.TabIndex = 7;
+            lblAmount.Text = "Amount:";
             // 
-            // dgvRecentTransactions
+            // txtAmount
             // 
-            this.dgvRecentTransactions.AllowUserToAddRows = false;
-            this.dgvRecentTransactions.AllowUserToDeleteRows = false;
-            this.dgvRecentTransactions.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.dgvRecentTransactions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvRecentTransactions.Location = new System.Drawing.Point(12, 140);
-            this.dgvRecentTransactions.Name = "dgvRecentTransactions";
-            this.dgvRecentTransactions.ReadOnly = true;
-            this.dgvRecentTransactions.RowTemplate.Height = 28;
-            this.dgvRecentTransactions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvRecentTransactions.Size = new System.Drawing.Size(920, 460);
+            txtAmount.Location = new Point(100, 19);
+            txtAmount.Name = "txtAmount";
+            txtAmount.Size = new Size(160, 23);
+            txtAmount.TabIndex = 0;
+            // 
+            // dgvTransactions
+            // 
+            dgvTransactions.AllowUserToAddRows = false;
+            dgvTransactions.AllowUserToDeleteRows = false;
+            dgvTransactions.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvTransactions.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvTransactions.BackgroundColor = Color.White;
+            dgvTransactions.BorderStyle = BorderStyle.None;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvTransactions.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dgvTransactions.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvTransactions.DefaultCellStyle = dataGridViewCellStyle2;
+            dgvTransactions.Location = new Point(12, 141);
+            dgvTransactions.Name = "dgvTransactions";
+            dgvTransactions.ReadOnly = true;
+            dgvTransactions.RowTemplate.Height = 28;
+            dgvTransactions.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvTransactions.Size = new Size(1076, 497);
+            dgvTransactions.TabIndex = 8;
+            // 
+            // menuStripMain
+            // 
+            menuStripMain.Items.AddRange(new ToolStripItem[] { mnuDashboard, mnuStatistics, mnuCategories, mnuBudgets, mnuSettings, mnuExit });
+            menuStripMain.Location = new Point(0, 106);
+            menuStripMain.Name = "menuStripMain";
+            menuStripMain.Size = new Size(1100, 24);
+            menuStripMain.TabIndex = 99;
+            menuStripMain.Text = "menuStripMain";
+            // 
+            // mnuDashboard
+            // 
+            mnuDashboard.Name = "mnuDashboard";
+            mnuDashboard.Size = new Size(76, 20);
+            mnuDashboard.Text = "Dashboard";
+            mnuDashboard.Click += mnuDashboard_Click;
+            // 
+            // mnuStatistics
+            // 
+            mnuStatistics.Name = "mnuStatistics";
+            mnuStatistics.Size = new Size(65, 20);
+            mnuStatistics.Text = "Statistics";
+            mnuStatistics.Click += mnuStatistics_Click;
+            // 
+            // mnuCategories
+            // 
+            mnuCategories.Name = "mnuCategories";
+            mnuCategories.Size = new Size(75, 20);
+            mnuCategories.Text = "Categories";
+            mnuCategories.Click += mnuCategories_Click;
+            // 
+            // mnuBudgets
+            // 
+            mnuBudgets.Name = "mnuBudgets";
+            mnuBudgets.Size = new Size(62, 20);
+            mnuBudgets.Text = "Budgets";
+            mnuBudgets.Click += mnuBudgets_Click;
+            // 
+            // mnuSettings
+            // 
+            mnuSettings.Name = "mnuSettings";
+            mnuSettings.Size = new Size(61, 20);
+            mnuSettings.Text = "Settings";
+            mnuSettings.Click += mnuSettings_Click;
+            // 
+            // mnuExit
+            // 
+            mnuExit.Name = "mnuExit";
+            mnuExit.Size = new Size(37, 20);
+            mnuExit.Text = "Exit";
+            mnuExit.Click += mnuExit_Click;
             // 
             // MainDashboardForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1320, 620);
-            this.Controls.Add(this.dgvRecentTransactions);
-            this.Controls.Add(this.pnlQuickStats);
-            this.Controls.Add(this.pnlTop);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.MinimumSize = new System.Drawing.Size(1100, 700);
-            this.Name = "MainDashboardForm";
-            this.Text = "Personal Finance Manager - Dashboard";
-            this.pnlTop.ResumeLayout(false);
-            this.pnlBalance.ResumeLayout(false);
-            this.pnlBalance.PerformLayout();
-            this.pnlExpenses.ResumeLayout(false);
-            this.pnlExpenses.PerformLayout();
-            this.pnlIncome.ResumeLayout(false);
-            this.pnlIncome.PerformLayout();
-            this.pnlQuickStats.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chartQuickStatistics)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvRecentTransactions)).EndInit();
-            this.flowButtons.ResumeLayout(false);
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1100, 650);
+            Controls.Add(menuStripMain);
+            Controls.Add(panelTop);
+            Controls.Add(dgvTransactions);
+            Font = new Font("Segoe UI", 9F);
+            MainMenuStrip = menuStripMain;
+            MinimumSize = new Size(1000, 600);
+            Name = "MainDashboardForm";
+            Text = "Personal Finance Manager";
+            panelTop.ResumeLayout(false);
+            panelTop.PerformLayout();
+            flowButtons.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvTransactions).EndInit();
+            menuStripMain.ResumeLayout(false);
+            menuStripMain.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
+
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlTop;
-        private System.Windows.Forms.Panel pnlBalance;
-        private System.Windows.Forms.Label lblCurrentBalanceTitle;
-        private System.Windows.Forms.Label lblCurrentBalance;
-        private System.Windows.Forms.Panel pnlExpenses;
-        private System.Windows.Forms.Label lblMonthlyExpensesTitle;
-        private System.Windows.Forms.Label lblMonthlyExpenses;
-        private System.Windows.Forms.Panel pnlIncome;
-        private System.Windows.Forms.Label lblMonthlyIncomeTitle;
-        private System.Windows.Forms.Label lblMonthlyIncome;
-        private System.Windows.Forms.Panel pnlQuickStats;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chartQuickStatistics;
-        private System.Windows.Forms.DataGridView dgvRecentTransactions;
+        private System.Windows.Forms.Panel panelTop;
+        private System.Windows.Forms.Label lblBalance;
         private System.Windows.Forms.FlowLayoutPanel flowButtons;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Button btnRefresh;
-        private System.Windows.Forms.Button btnOpenStatistics;
-        private System.Windows.Forms.Button btnAddTransaction;
+        private System.Windows.Forms.Label lblCategory;
+        private System.Windows.Forms.ComboBox cmbCategory;
+        private System.Windows.Forms.Label lblAmount;
+        private System.Windows.Forms.TextBox txtAmount;
+        private System.Windows.Forms.DataGridView dgvTransactions;
+        private System.Windows.Forms.MenuStrip menuStripMain;
+        private System.Windows.Forms.ToolStripMenuItem mnuDashboard;
+        private System.Windows.Forms.ToolStripMenuItem mnuStatistics;
+        private System.Windows.Forms.ToolStripMenuItem mnuCategories;
+        private System.Windows.Forms.ToolStripMenuItem mnuBudgets;
+        private System.Windows.Forms.ToolStripMenuItem mnuSettings;
+        private System.Windows.Forms.ToolStripMenuItem mnuExit;
     }
 }
