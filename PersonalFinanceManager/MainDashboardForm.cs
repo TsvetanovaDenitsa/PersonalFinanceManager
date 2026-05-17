@@ -176,7 +176,7 @@ namespace PersonalFinanceManager.UI
                 foreach (var item in data)
                 {
                     var label = categories.TryGetValue(item.CategoryId, out var name) ? name : "Uncategorized";
-                    var ptIdx = series.Points.Add((double)item.Total);
+                    int ptIdx = series.Points.AddY((double)item.Total);
                     var pt = series.Points[ptIdx];
                     pt.Label = $"{label}: {item.Total:C}";
                     pt.LegendText = label;

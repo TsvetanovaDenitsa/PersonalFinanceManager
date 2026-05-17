@@ -157,9 +157,10 @@ namespace PersonalFinanceManager
                 foreach (var item in expenses)
                 {
                     var label = catDict.TryGetValue(item.CategoryId, out var name) ? name : "Uncategorized";
-                    var point = series.Points.Add((double)item.Total);
-                    point.Label = $"{label}: {item.Total:C}";
-                    point.LegendText = label;
+                    int idx = series.Points.AddY((double)item.Total);
+                    var dp = series.Points[idx];
+                    dp.Label = $"{label}: {item.Total:C}";
+                    dp.LegendText = label;
                 }
 
                 chartExpenses.Series.Add(series);
