@@ -128,50 +128,20 @@ namespace PersonalFinanceManager
             return v is int id ? id : 0;
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void btnSave_Click(
+       object sender,
+       EventArgs e)
         {
-            try
+            TransactionForm form =
+                new TransactionForm();
+
+            form.ShowDialog();
+
+            if (form.TransactionSaved)
             {
-                if (!decimal.TryParse(txtAmount.Text.Trim(), out var amount))
-                {
-                    MessageBox.Show(this, "Please enter a valid amount.");
-                    return;
-                }
+                LoadTransactions();
 
-                if (cmbCategory.SelectedItem is not Category cat || cat.Id <= 0)
-                {
-                    MessageBox.Show(this, "Please select a category.");
-                    return;
-                }
-
-                var tx = new Transaction
-                {
-                    UserId = CurrentUser.Id,
-                    CategoryId = cat.Id,
-                    Amount = amount,
-                    Description = string.IsNullOrWhiteSpace(txtDescription.Text) ? null : txtDescription.Text.Trim(),
-                    TransactionType = amount >= 0 ? "Income" : "Expense",
-                    TransactionDate = DateTime.Now,
-                    CreatedAt = DateTime.Now
-                };
-
-                var ok = _txRepo.AddTransaction(tx);
-                if (ok)
-                {
-                    MessageBox.Show(this, "Transaction added.");
-                    LoadTransactions();
-                    CalculateBalance();
-                    txtAmount.Clear();
-                    txtDescription.Clear();
-                }
-                else
-                {
-                    MessageBox.Show(this, "Unable to add transaction.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(this, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                CalculateBalance();
             }
         }
 
