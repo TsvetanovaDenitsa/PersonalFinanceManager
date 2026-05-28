@@ -1,180 +1,159 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿// StatisticsForm.cs
+
 using System.Windows.Forms.DataVisualization.Charting;
-using PersonalFinanceManager.BLL;
 using PersonalFinanceManager.DAL;
 using PersonalFinanceManager.Models;
 
-namespace PersonalFinanceManager
+namespace PersonalFinanceManager;
+
+public partial class StatisticsForm : Form
 {
-    public partial class StatisticsForm : Form
+    private readonly DatabaseManager _db;
+
+    private readonly TransactionRepository _txRepo;
+
+    private readonly CategoryRepository _catRepo;
+
+    public StatisticsForm()
     {
-        private readonly DatabaseManager _db;
-        private readonly TransactionService _txService;
-        private readonly CategoryService _catService;
+        InitializeComponent();
 
-        public StatisticsForm()
-        {
-            InitializeComponent();
+        _db = new DatabaseManager();
 
-            // Initialize data access and services
-            _db = new DatabaseManager();
-            var txRepo = new TransactionRepository(_db);
-            var catRepo = new CategoryRepository(_db);
+        _txRepo =
+            new TransactionRepository(_db);
 
-            _txService = new TransactionService(txRepo);
-            _catService = new CategoryService(catRepo);
+        _catRepo =
+            new CategoryRepository(_db);
 
-            // Start asynchronous load without blocking constructor
-            _ = InitializeAsync();
-        }
+        LoadStatistics();
+    }
 
-        private async Task InitializeAsync()
-        {
-            try
-            {
-                await LoadStatisticsAsync().ConfigureAwait(true);
-                await LoadExpenseChartAsync().ConfigureAwait(true);
-            }
-            catch (Exception ex)
-            {
-                // Show error on UI thread
-                MessageBox.Show(this, $"Failed to initialize statistics: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+    private void LoadStatistics()
+    {
+        LoadPieChart();
 
-        private async Task LoadStatisticsAsync()
-        {
-            try
-            {
-                // Fetch transactions off the UI thread
-                var transactions = await Task.Run(() => _txService.GetAllTransactions()).ConfigureAwait(true);
+        LoadMonthlyStatistics();
 
-                // Get total balance from service
-                var totalBalance = await Task.Run(() => _txService.GetBalance()).ConfigureAwait(true);
+        LoadSummary();
+    }
 
-                // Compute monthly totals
-                var now = DateTime.Now;
-                var monthly = transactions
-                    .Where(t => t.TransactionDate.HasValue && t.TransactionDate.Value.Year == now.Year && t.TransactionDate.Value.Month == now.Month)
-                    .ToList();
+    private void LoadPieChart()
+    {
+        chartExpenses.Series.Clear();
 
-                var monthlyIncome = monthly.Where(t => string.Equals(t.TransactionType, "Income", StringComparison.OrdinalIgnoreCase)).Sum(t => t.Amount);
-                var monthlyExpenses = monthly.Where(t => !string.Equals(t.TransactionType, "Income", StringComparison.OrdinalIgnoreCase)).Sum(t => t.Amount);
+        Series series =
+            new Series("Expenses");
 
-                // Marshal UI updates to the UI thread
-                if (InvokeRequired)
+        series.ChartType =
+            SeriesChartType.Pie;
+
+        List<Transaction> transactions =
+            _txRepo.GetAllTransactions(
+                CurrentUser.Id);
+
+        List<Category> categories =
+            _catRepo.GetAllCategories();
+
+        var grouped =
+            transactions
+                .Where(t =>
+                    t.TransactionType ==
+                    "Expense")
+                .GroupBy(t =>
+                    t.CategoryId)
+                .Select(g => new
                 {
-                    Invoke(new Action(() =>
-                    {
-                        UpdateStatisticLabels(totalBalance, monthlyIncome, monthlyExpenses);
-                    }));
-                }
-                else
-                {
-                    UpdateStatisticLabels(totalBalance, monthlyIncome, monthlyExpenses);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(this, $"Failed to load statistics: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+                    CategoryId = g.Key,
 
-        private void UpdateStatisticLabels(decimal totalBalance, decimal monthlyIncome, decimal monthlyExpenses)
+                    Total = g.Sum(
+                        x => x.Amount)
+                })
+                .ToList();
+
+        foreach (var item in grouped)
         {
-            // It is assumed the form contains labels with these names.
-            // If labels are not present, these operations will be no-ops in practice (designer should define them).
-            if (this.Controls.Find("lblTotalBalance", true).FirstOrDefault() is Label lblTotalBalance)
-                lblTotalBalance.Text = $"Total Balance: {totalBalance:C}";
+            Category? category =
+                categories.FirstOrDefault(
+                    c => c.Id ==
+                         item.CategoryId);
 
-            if (this.Controls.Find("lblMonthlyIncome", true).FirstOrDefault() is Label lblMonthlyIncome)
-                lblMonthlyIncome.Text = $"Monthly Income: {monthlyIncome:C}";
+            string name =
+                category?.Name ??
+                "Unknown";
 
-            if (this.Controls.Find("lblMonthlyExpenses", true).FirstOrDefault() is Label lblMonthlyExpenses)
-                lblMonthlyExpenses.Text = $"Monthly Expenses: {monthlyExpenses:C}";
+            series.Points.AddXY(
+                name,
+                item.Total);
         }
 
-        private async Task LoadExpenseChartAsync()
+        chartExpenses.Series.Add(
+            series);
+    }
+
+    private void LoadMonthlyStatistics()
+    {
+        List<Transaction> transactions =
+            _txRepo.GetAllTransactions(
+                CurrentUser.Id);
+
+        decimal income =
+            transactions
+                .Where(t =>
+                    t.TransactionType ==
+                    "Income")
+                .Sum(t => t.Amount);
+
+        decimal expenses =
+            transactions
+                .Where(t =>
+                    t.TransactionType ==
+                    "Expense")
+                .Sum(t => t.Amount);
+
+        lblIncome.Text =
+            $"Total Income: {income:C}";
+
+        lblExpenses.Text =
+            $"Total Expenses: {expenses:C}";
+    }
+
+    private void LoadSummary()
+    {
+        List<Transaction> transactions =
+            _txRepo.GetAllTransactions(
+                CurrentUser.Id);
+
+        decimal balance = 0;
+
+        foreach (Transaction transaction
+                 in transactions)
         {
-            try
+            if (transaction
+                .TransactionType ==
+                "Income")
             {
-                var transactions = await Task.Run(() => _txService.GetAllTransactions()).ConfigureAwait(true);
-                var categories = await Task.Run(() => _catService.GetAllCategories()).ConfigureAwait(true);
-                var catDict = categories.ToDictionary(c => c.Id, c => c.Name);
-
-                var now = DateTime.Now;
-                var expenses = transactions
-                    .Where(t => !string.Equals(t.TransactionType, "Income", StringComparison.OrdinalIgnoreCase))
-                    .Where(t => t.TransactionDate.HasValue && t.TransactionDate.Value.Year == now.Year && t.TransactionDate.Value.Month == now.Month)
-                    .GroupBy(t => t.CategoryId)
-                    .Select(g => (CategoryId: g.Key, Total: g.Sum(x => x.Amount)))
-                    .Where(x => x.Total > 0)
-                    .OrderByDescending(x => x.Total)
-                    .ToList();
-
-                // Update chart on UI thread
-                if (InvokeRequired)
-                {
-                    Invoke(new Action(() => PopulateExpenseChart(expenses, catDict)));
-                }
-                else
-                {
-                    PopulateExpenseChart(expenses, catDict);
-                }
+                balance +=
+                    transaction.Amount;
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(this, $"Failed to load expense chart: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void PopulateExpenseChart(List<(int CategoryId, decimal Total)> expenses, Dictionary<int, string> catDict)
-        {
-            // It is assumed the form contains a Chart named chartExpenses.
-            if (this.Controls.Find("chartExpenses", true).FirstOrDefault() is Chart chartExpenses)
-            {
-                chartExpenses.Series.Clear();
-
-                if (chartExpenses.ChartAreas.Count == 0)
-                    chartExpenses.ChartAreas.Add(new ChartArea("Default"));
-
-                var series = new Series("Expenses")
-                {
-                    ChartType = SeriesChartType.Pie,
-                    ChartArea = chartExpenses.ChartAreas[0].Name,
-                    IsValueShownAsLabel = true,
-                    Font = new Font("Segoe UI", 9F)
-                };
-
-                foreach (var item in expenses)
-                {
-                    var label = catDict.TryGetValue(item.CategoryId, out var name) ? name : "Uncategorized";
-                    int idx = series.Points.AddY((double)item.Total);
-                    var dp = series.Points[idx];
-                    dp.Label = $"{label}: {item.Total:C}";
-                    dp.LegendText = label;
-                }
-
-                chartExpenses.Series.Add(series);
-
-                // Optional: adjust legend
-                if (chartExpenses.Legends.Count == 0)
-                    chartExpenses.Legends.Add(new Legend("Legend"));
+                balance -=
+                    transaction.Amount;
             }
         }
 
-        // Optional refresh handler - wire this up in the designer to a Refresh button if present.
-        private async void btnRefresh_Click(object sender, EventArgs e)
-        {
-            await InitializeAsync().ConfigureAwait(true);
-        }
+        lblBalance.Text =
+            $"Current Balance: {balance:C}";
+
+        lblTransactions.Text =
+            $"Transactions: {transactions.Count}";
+    }
+
+    private void btnClose_Click(
+        object sender,
+        EventArgs e)
+    {
+        Close();
     }
 }

@@ -44,6 +44,22 @@ ORDER BY TransactionDate DESC, CreatedAt DESC";
         return ExecuteQuery(sql, null);
     }
 
+    public List<Transaction> GetAllTransactions(int userId)
+    {
+        if (userId <= 0)
+            throw new ArgumentException("User id must be positive.", nameof(userId));
+
+        const string sql = @"SELECT Id, UserId, CategoryId, Amount, Description, TransactionType, TransactionDate, CreatedAt
+FROM Transactions
+WHERE UserId = @UserId
+ORDER BY TransactionDate DESC, CreatedAt DESC";
+
+        return ExecuteQuery(sql, cmd =>
+        {
+            cmd.Parameters.AddWithValue("@UserId", userId);
+        });
+    }
+
     public Transaction? GetTransactionById(int id)
     {
         if (id <= 0) throw new ArgumentException("Id must be a positive integer.", nameof(id));

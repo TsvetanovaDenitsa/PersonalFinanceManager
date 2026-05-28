@@ -80,7 +80,7 @@ namespace PersonalFinanceManager
                 }
                 else
                 {
-                    _transactions = _txRepo.GetAllTransactions();
+                    _transactions = _txRepo.GetAllTransactions(CurrentUser.Id);
                 }
 
                 var userTx = _transactions.Where(t => t.UserId == CurrentUser.Id).ToList();
